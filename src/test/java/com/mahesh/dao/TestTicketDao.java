@@ -34,7 +34,7 @@ public class TestTicketDao {
 
 				ticketDao.delete(5);
 			*/	
-				List<Ticket> list = ticketDao.list();
+				List<Ticket> list = ticketDao.selectAll();
 				Iterator<Ticket> i = list.iterator();
 				while (i.hasNext()) {
 					Ticket tickets=(Ticket) i.next();

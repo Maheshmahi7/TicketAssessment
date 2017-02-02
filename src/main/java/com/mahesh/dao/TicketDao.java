@@ -24,8 +24,8 @@ public class TicketDao {
 	
 	public void update(Ticket ticket) {
 
-		String sql = "UPDATE TICKET_TICKETS SET EMPLOYEE_ID=? WHERE ID=?";
-		Object[] params={ ticket.getEmployeeId().getId(),ticket.getId()};
+		String sql = "UPDATE TICKET_TICKETS SET DESCRIPTION=? WHERE USER_ID=? AND ID=?";
+		Object[] params={ ticket.getDescription(),ticket.getUserId(),ticket.getId()};
 		jdbcTemplate.update(sql, params);
 
 	}
@@ -38,10 +38,36 @@ public class TicketDao {
 		
 	}
 		
-		public List<Ticket> list() {
+		public List<Ticket> selectAll() {
 
 			String sql = "SELECT ID,USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID,CREATED_DATE,CLOSED_DATE,STATUS FROM TICKET_TICKETS";
-			return jdbcTemplate.query(sql, (rs, rowNum) -> {
+			Object[] params={};
+			return convert(sql,params);
+
+	}
+		
+		public Ticket findStatus(int id,User userId)
+		{
+			String sql = "SELECT STATUS FROM TICKET_TICKETS WHERE USER_ID=? AND ID=?";
+			Object[] params={userId,id};
+			return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+				Ticket ticket=new Ticket();
+				ticket.setStatus(rs.getString("STATUS"));
+				return ticket;
+			});
+
+		}
+		public List<Ticket> selectByUserId(User userId) {
+
+			String sql = "SELECT ID,USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID,CREATED_DATE,CLOSED_DATE,STATUS FROM TICKET_TICKETS WHERE USER_ID=?";
+			Object[] params={userId};
+			return convert(sql, params);
+
+
+	}
+
+		private List<Ticket> convert(String sql, Object[] params) {
+			return (List<Ticket>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
 				Ticket ticket=new Ticket();
 				ticket.setId(rs.getInt("ID"));
 				User user=new User();
@@ -64,10 +90,9 @@ public class TicketDao {
 				return ticket;
 
 			});
+		}
 
-
-	}
-
+		
 
 
 
