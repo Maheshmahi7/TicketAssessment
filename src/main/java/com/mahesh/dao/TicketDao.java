@@ -57,14 +57,20 @@ public class TicketDao {
 			});
 
 		}
-		public List<Ticket> selectByUserId(User userId) {
+		public List<Ticket> selectByUserId(User user) {
 
 			String sql = "SELECT ID,USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID,CREATED_DATE,CLOSED_DATE,STATUS FROM TICKET_TICKETS WHERE USER_ID=?";
-			Object[] params={userId};
+			Object[] params={user.getId()};
 			return convert(sql, params);
-
-
 	}
+		
+		public void close(Ticket ticket){
+			
+			String sql = "UPDATE TICKET_TICKETS SET STATUS=? WHERE USER_ID=? AND ID=?";
+			Object[] params={ ticket.getStatus(),ticket.getUserId(),ticket.getId()};
+			jdbcTemplate.update(sql, params);
+
+		}
 
 		private List<Ticket> convert(String sql, Object[] params) {
 			return (List<Ticket>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {

@@ -40,6 +40,16 @@ public class TicketCreationDao {
 		ticketDao.selectByUserId(userId);
 	}
 	
+	public void closeTicket(int id,User userId){
+		if(ticketDao.findStatus(id,userId).getStatus()!="CLOSED")
+		{
+		ticket.setStatus("CLOSED");
+		ticket.setId(id);
+		ticket.setUserId(userId);
+		ticketDao.close(ticket);
+		}
+		
+	}
 	
 
 }

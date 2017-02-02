@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.mahesh.model.Ticket;
+import com.mahesh.model.User;
 
 public class TestTicketDao {
 
@@ -11,10 +12,10 @@ public class TestTicketDao {
 		
 		TicketDao ticketDao=new TicketDao();
 		
-		/*		Ticket ticket = new Ticket();
+				//Ticket ticket = new Ticket();
 				User user = new User();
-				user.setId(1);
-				ticket.setUserId(user);
+				user.setId(2);
+		/*		ticket.setUserId(user);
 				Department department = new Department();
 				department.setId(1);
 				ticket.setDepartmentId(department);
@@ -34,7 +35,7 @@ public class TestTicketDao {
 
 				ticketDao.delete(5);
 			*/	
-				List<Ticket> list = ticketDao.selectAll();
+				List<Ticket> list = ticketDao.selectByUserId(user);
 				Iterator<Ticket> i = list.iterator();
 				while (i.hasNext()) {
 					Ticket tickets=(Ticket) i.next();
