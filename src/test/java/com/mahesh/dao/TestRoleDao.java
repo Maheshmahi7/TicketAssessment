@@ -8,6 +8,7 @@ import com.mahesh.model.Role;
 public class TestRoleDao {
 
 	public static void main(String[] args) {
+		
 		RoleDao roleDao=new RoleDao();
 //		roleDao.save("Manager");
 //		

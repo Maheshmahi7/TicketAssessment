@@ -4,7 +4,6 @@ public class TestUser {
 
 	public static void main(String[] args) {
 
-
 		User user=new User();
 		user.setId(1);
 		user.setName("Mahesh");

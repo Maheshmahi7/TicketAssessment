@@ -25,7 +25,6 @@ public class UserDao {
 		Object[] params = { user.getName(),user.getMobileNumber(),user.getId() };
 		jdbcTemplate.update(sql, params);
 
-
 	}
 
 	public void delete(int id) {

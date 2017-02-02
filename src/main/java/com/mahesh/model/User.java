@@ -12,4 +12,5 @@ public class User {
 	private long mobileNumber;
 	private int active;
 
+	
 }

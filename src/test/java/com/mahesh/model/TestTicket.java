@@ -6,6 +6,7 @@ public class TestTicket {
 
 	public static void main(String[] args) {
 
+	
 		Ticket ticket = new Ticket();
 		ticket.setId(1);
 		User user = new User();

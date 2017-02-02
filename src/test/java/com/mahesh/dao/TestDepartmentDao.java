@@ -8,6 +8,7 @@ import com.mahesh.model.Department;
 public class TestDepartmentDao {
 
 	public static void main(String[] args) {
+		
 		DepartmentDao departmentDao=new DepartmentDao();
 		
 		/*Department department=new Department();

@@ -4,7 +4,6 @@ public class TestPriority {
 
 	public static void main(String[] args) {
 
-
 		Priority priority=new Priority();
 		priority.setId(1);
 		priority.setName("Production Manager");

@@ -25,7 +25,6 @@ public class RoleDao {
 		Object[] params = { role.getActive(),role.getId() };
 		jdbcTemplate.update(sql, params);
 
-
 	}
 
 	public void delete(int id) {

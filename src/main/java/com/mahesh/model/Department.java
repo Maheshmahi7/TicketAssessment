@@ -10,5 +10,4 @@ public class Department {
 	private int active;
 	
 
-
 }

@@ -8,6 +8,7 @@ import com.mahesh.model.Priority;
 public class TestPriorityDao {
 
 	public static void main(String[] args) {
+		
 		PriorityDao priorityDao=new PriorityDao();
 		priorityDao.save("Very Low");
 		

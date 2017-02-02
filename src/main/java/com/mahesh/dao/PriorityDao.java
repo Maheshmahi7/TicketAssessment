@@ -25,7 +25,6 @@ public class PriorityDao {
 		Object[] params = { priority.getActive(),priority.getId() };
 		jdbcTemplate.update(sql, params);
 
-
 	}
 
 	public void delete(int id) {

@@ -12,6 +12,7 @@ import com.mahesh.model.User;
 import com.mahesh.util.ConnectionUtil;
 
 public class TicketDao {
+	
 	JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
 	
 	public void save(Ticket ticket) {

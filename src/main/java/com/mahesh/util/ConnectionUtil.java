@@ -10,6 +10,7 @@ public class ConnectionUtil {
 	ConnectionUtil(){
 		
 	}
+	
 	public static DataSource getDataSource() {
 		BasicDataSource ds = new BasicDataSource();
 		ds.setDriverClassName("com.mysql.cj.jdbc.Driver");

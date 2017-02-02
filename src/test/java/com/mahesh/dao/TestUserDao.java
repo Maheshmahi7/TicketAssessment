@@ -18,7 +18,6 @@ public class TestUserDao {
 		user.setMobileNumber(852682870);
 		userDao.save(user);*/
 		
-		
 		user.setName("Arunkumar");
 		user.setMobileNumber(774455668);
 		user.setId(4);

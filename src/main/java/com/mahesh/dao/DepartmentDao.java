@@ -8,6 +8,7 @@ import com.mahesh.model.Department;
 import com.mahesh.util.ConnectionUtil;
 
 public class DepartmentDao {
+	
 	JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
 	
 	public void save(String name) {

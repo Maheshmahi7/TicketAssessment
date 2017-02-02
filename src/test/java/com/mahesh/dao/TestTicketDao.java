@@ -8,6 +8,7 @@ import com.mahesh.model.Ticket;
 public class TestTicketDao {
 
 	public static void main(String[] args) {
+		
 		TicketDao ticketDao=new TicketDao();
 		
 		/*		Ticket ticket = new Ticket();
