@@ -37,7 +37,12 @@ public class RoleDao {
 		public List<Role> list() {
 
 			String sql = "SELECT ID,NAME,ACTIVE FROM TICKET_ROLES";
-			return jdbcTemplate.query(sql, (rs, rowNum) -> {
+			Object[] params={};
+			return convert(sql,params);
+			}
+
+		private List<Role> convert(String sql, Object[] params) {
+			return (List<Role>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
 				Role role=new Role();
 				role.setId(rs.getInt("ID"));
 				role.setName(rs.getString("NAME"));
@@ -45,10 +50,7 @@ public class RoleDao {
 				return role;
 
 			});
-
-
 	}
-
 
 
 }

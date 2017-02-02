@@ -37,7 +37,13 @@ public class PriorityDao {
 		public List<Priority> list() {
 
 			String sql = "SELECT ID,NAME,ACTIVE FROM TICKET_PRIORITYS";
-			return jdbcTemplate.query(sql, (rs, rowNum) -> {
+			Object[] params={};
+			return convert(sql,params);
+
+	}
+		
+		private List<Priority> convert(String sql, Object[] params) {
+			return (List<Priority>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
 				Priority priority=new Priority();
 				priority.setId(rs.getInt("ID"));
 				priority.setName(rs.getString("NAME"));

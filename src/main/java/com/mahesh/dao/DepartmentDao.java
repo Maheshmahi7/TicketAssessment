@@ -36,7 +36,12 @@ public class DepartmentDao {
 		public List<Department> list() {
 
 			String sql = "SELECT ID,NAME,ACTIVE FROM TICKET_DEPARTMENTS";
-			return jdbcTemplate.query(sql, (rs, rowNum) -> {
+			Object[] params={};
+			return convert(sql,params);
+
+	}
+		private List<Department> convert(String sql, Object[] params) {
+			return (List<Department>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
 				Department department=new Department();
 				department.setId(rs.getInt("ID"));
 				department.setName(rs.getString("NAME"));

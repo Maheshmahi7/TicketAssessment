@@ -40,26 +40,36 @@ public class EmployeeDao {
 		public List<Employee> list() {
 
 			String sql = "SELECT ID,NAME,DEPARTMENT_ID,ROLE_ID,EMAIL_ID,PASSWORD,MOBILE_NUMBER,ACTIVE FROM TICKET_EMPLOYEES";
-			return jdbcTemplate.query(sql, (rs, rowNum) -> {
-				Employee employee=new Employee();
-				employee.setId(rs.getInt("ID"));
-				employee.setName(rs.getString("NAME"));
-				Department department=new Department();
-				department.setId(rs.getInt("DEPARTMENT_ID"));
-				employee.setDepartmentId(department);
-				Role role=new Role();
-				role.setId(rs.getInt("ROLE_ID"));
-				employee.setRoleId(role);
-				employee.setEmailId(rs.getString("EMAIL_ID"));
-				employee.setPassword(rs.getString("PASSWORD"));
-				employee.setMobileNumber(rs.getLong("MOBILE_NUMBER"));
-				employee.setActive(rs.getInt("ACTIVE"));
-				return employee;
-
-			});
-
+			Object[] params={};
+			return convert(sql,params);
 
 	}
+		
+		private List<Employee> convert(String sql, Object[] params) {
+		return (List<Employee>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
+			Employee employee=new Employee();
+			employee.setId(rs.getInt("ID"));
+			employee.setName(rs.getString("NAME"));
+			Department department=new Department();
+			department.setId(rs.getInt("DEPARTMENT_ID"));
+			employee.setDepartmentId(department);
+			Role role=new Role();
+			role.setId(rs.getInt("ROLE_ID"));
+			employee.setRoleId(role);
+			employee.setEmailId(rs.getString("EMAIL_ID"));
+			employee.setPassword(rs.getString("PASSWORD"));
+			employee.setMobileNumber(rs.getLong("MOBILE_NUMBER"));
+			employee.setActive(rs.getInt("ACTIVE"));
+			return employee;
+
+		});
 
 
 }
+
+
+}
+
+
+
+

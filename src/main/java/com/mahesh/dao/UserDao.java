@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+
 import com.mahesh.model.User;
 import com.mahesh.util.ConnectionUtil;
 
@@ -37,7 +38,12 @@ public class UserDao {
 		public List<User> list() {
 
 			String sql = "SELECT ID,NAME,EMAIL_ID,PASSWORD,MOBILE_NUMBER,ACTIVE FROM TICKET_USERS";
-			return jdbcTemplate.query(sql, (rs, rowNum) -> {
+			Object[] params={};
+			return convert(sql,params);
+}
+		
+		private List<User> convert(String sql, Object[] params) {
+			return (List<User>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
 				User user=new User();
 				user.setId(rs.getInt("ID"));
 				user.setName(rs.getString("NAME"));
@@ -48,8 +54,6 @@ public class UserDao {
 				return user;
 
 			});
-
-
 }
 
 }
