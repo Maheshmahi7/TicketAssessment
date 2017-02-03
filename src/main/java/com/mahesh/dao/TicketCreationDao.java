@@ -15,8 +15,7 @@ public class TicketCreationDao {
 	
 	public void createTicket(User user,Department departmentId,String subject,String description,Priority priorityId)
 	{
-		if(loginDao.UserLogin(user))
-		{
+		
 		TicketDao ticketDao=new TicketDao();
 		Ticket ticket = new Ticket();
 		user.getId();		
@@ -26,9 +25,7 @@ public class TicketCreationDao {
 		ticket.setDescription(description);
 		ticket.setPriorityId(priorityId);
 		ticketDao.save(ticket);
-		}
-		
-		
+				
 	}
 	
 	public void updateTicket(int id,User user,String description)

@@ -15,7 +15,7 @@ public class Validator {
 		}
 	}
 	public void isInvalid(Integer number,String message)throws ValidatorException{
-		if(number==null || "".equals(number) || number>=0){
+		if(number==null || "".equals(number) || number<=0){
 			throw new ValidatorException("Inavlid "+message);
 		}
 	}

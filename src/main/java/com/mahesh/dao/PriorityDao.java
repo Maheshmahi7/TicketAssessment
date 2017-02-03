@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+
 import com.mahesh.model.Priority;
 import com.mahesh.util.ConnectionUtil;
 
@@ -54,6 +55,18 @@ public class PriorityDao {
 
 
 	}
+		public Priority findPriorityId(String priorityName) {
+			String sql = "SELECT ID FROM TICKET_PRIORITYS WHERE NAME = ?";
+			Object[] params = { priorityName };
+			return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
+				Priority priority=new Priority();
+				priority.setId(rs.getInt("ID"));
+				return priority;
+			
+			});
+
+		}
+
 
 
 

@@ -66,6 +66,18 @@ public class EmployeeDao {
 
 
 }
+		public String checkPassword(Employee employee)
+		{	
+			String sql="SELECT PASSWORD FROM TICKET_EMPLOYEES WHERE EMAIL_ID=?";
+			Object[] params={employee.getEmailId()};
+			return jdbcTemplate.queryForObject(sql,params, (rs, rowNum) -> {
+				Employee employees=new Employee();
+				employees.setPassword(rs.getString("PASSWORD"));;
+				return employees.getPassword();
+			});
+			
+		}
+
 
 
 }

@@ -66,5 +66,16 @@ public class UserDao {
 			});
 			
 		}
+		public User findUserId(String emailId) {
+			String sql = "SELECT ID FROM TICKET_USERS WHERE EMAIL_ID = ?";
+			Object[] params = { emailId };
+			return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
+				User user=new User();
+				user.setId(rs.getInt("ID"));
+				return user;
+			
+			});
+
+		}
 
 }
