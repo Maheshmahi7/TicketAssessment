@@ -17,7 +17,6 @@ import com.mahesh.validator.UserServiceValidator;
 
 public class UserService {
 	
-	TicketCreationDao ticketCreationDao=new TicketCreationDao();
 	Ticket ticket=new Ticket();
 	User user=new User();
 	Department department=new Department();
@@ -27,6 +26,7 @@ public class UserService {
 	DepartmentDao departmentDao=new DepartmentDao();
 	PriorityDao priorityDao=new PriorityDao();
 	UserServiceValidator userServiceValidator=new UserServiceValidator();
+	TicketCreationDao ticketCreationDao=new TicketCreationDao();
 	
 	
 	public void newTicket(String emailId,String password,String subject,String description,String departmentName,String priorityName) throws ServiceException,PersistenceException
@@ -48,6 +48,58 @@ public class UserService {
 		} catch (ValidatorException e) {
 			throw new ServiceException("Cannot Create Ticket", e);
 		}
+	}
+	
+	public void ticketUpdate(String emailId,String password,String description,int ticketId)throws ServiceException,PersistenceException
+	{
+		try {
+			user.setEmailId(emailId);
+			user.setPassword(password);
+			userServiceValidator.updateTicket(emailId, password, ticketId, description);
+			if(loginDao.UserLogin(user))
+			{
+			int userId=userDao.findUserId(emailId).getId();
+			user.setId(userId);
+			ticketCreationDao.updateTicket(ticketId, user, description);
+			}
+			} catch (ValidatorException e) {
+				throw new ServiceException("Cannot Update Ticket", e);
+			}
+	}
+	
+	public void ticketClose(String emailId,String password,int ticketId)throws ServiceException,PersistenceException
+	{
+		try {
+			user.setEmailId(emailId);
+			user.setPassword(password);
+			userServiceValidator.updateClose(emailId, password, ticketId);
+			if(loginDao.UserLogin(user))
+			{
+			int userId=userDao.findUserId(emailId).getId();
+			user.setId(userId);
+			ticketCreationDao.closeTicket(ticketId, user);
+			}
+			} catch (ValidatorException e) {
+				throw new ServiceException("Cannot Update Ticket", e);
+			}
+		
+	}
+	
+	public void viewTicket(String emailId,String password)throws ServiceException,PersistenceException
+	{
+		try {
+			user.setEmailId(emailId);
+			user.setPassword(password);
+			userServiceValidator.viewTicket(emailId, password);
+			if(loginDao.UserLogin(user))
+			{
+			int userId=userDao.findUserId(emailId).getId();
+			user.setId(userId);
+			ticketCreationDao.viewTicket(user);
+			}
+			} catch (ValidatorException e) {
+				throw new ServiceException("Cannot Update Ticket", e);
+			}
 	}
 
 }

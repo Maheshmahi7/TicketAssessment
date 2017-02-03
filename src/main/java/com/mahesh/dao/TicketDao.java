@@ -102,6 +102,7 @@ public class TicketDao {
 				priority.setId(rs.getInt("PRIORITY_ID"));
 				ticket.setPriorityId(priority);
 				Employee employee=new Employee();
+				employee.setId(rs.getInt("EMPLOYEE_ID"));
 				ticket.setEmployeeId(employee);
 				ticket.setCreatedDate(rs.getDate("CREATED_DATE").toLocalDate());
 				ticket.setStatus(rs.getString("STATUS"));

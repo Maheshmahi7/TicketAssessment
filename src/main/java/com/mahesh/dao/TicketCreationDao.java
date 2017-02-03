@@ -30,15 +30,12 @@ public class TicketCreationDao {
 	
 	public void updateTicket(int id,User user,String description)
 	{
-		if(loginDao.UserLogin(user))
-		{
 		if((ticketDao.findStatus(id,user)).getStatus()!="CLOSED")
 		{
 		ticket.setDescription(description);
 		ticket.setId(id);
 		ticket.setUserId(user);
 		ticketDao.update(ticket);
-		}
 		}
 	}
 	
@@ -53,8 +50,6 @@ public class TicketCreationDao {
 	
 	public void closeTicket(int id,User user)
 	{
-		if(loginDao.UserLogin(user))
-		{
 		if(ticketDao.findStatus(id,user).getStatus()!="CLOSED")
 		{
 		ticket.setStatus("CLOSED");
@@ -62,8 +57,7 @@ public class TicketCreationDao {
 		ticket.setUserId(user);
 		ticketDao.close(ticket);
 		}
-		}
-		
+			
 	}
 	
 

@@ -12,9 +12,10 @@ public class TestTicketDao {
 		
 		TicketDao ticketDao=new TicketDao();
 		
-				//Ticket ticket = new Ticket();
+				Ticket ticket = new Ticket();
 				User user = new User();
-				user.setId(2);
+				user.setId(1);
+				user.setEmailId("mahesh11317@gmail.com");
 		/*		ticket.setUserId(user);
 				Department department = new Department();
 				department.setId(1);
@@ -25,16 +26,15 @@ public class TestTicketDao {
 				priority.setId(2);
 				ticket.setPriorityId(priority);
 				ticketDao.save(ticket);
-				
-				Employee employee=new Employee();
-				employee.setId(2);
-				ticket.setEmployeeId(employee);
-				ticket.setId(5);
+				*/
+				ticket.setDescription("Changing");
+				ticket.setUserId(user);
+				ticket.setId(1);
 				ticketDao.update(ticket);
 				
 
-				ticketDao.delete(5);
-			*/	
+			//	ticketDao.delete(5);
+				
 				List<Ticket> list = ticketDao.selectByUserId(user);
 				Iterator<Ticket> i = list.iterator();
 				while (i.hasNext()) {
