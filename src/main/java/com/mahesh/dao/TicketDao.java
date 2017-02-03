@@ -24,8 +24,8 @@ public class TicketDao {
 	
 	public void update(Ticket ticket) {
 
-		String sql = "UPDATE TICKET_TICKETS SET DESCRIPTION=? WHERE USER_ID=? AND ID=?";
-		Object[] params={ ticket.getDescription(),ticket.getUserId(),ticket.getId()};
+		String sql = "UPDATE TICKET_TICKETS SET DESCRIPTION=? WHERE ID=? AND USER_ID=?";
+		Object[] params={ ticket.getDescription(),ticket.getId(),ticket.getUserId().getId()};
 		jdbcTemplate.update(sql, params);
 
 	}
@@ -48,8 +48,8 @@ public class TicketDao {
 		
 		public Ticket findStatus(int id,User userId)
 		{
-			String sql = "SELECT STATUS FROM TICKET_TICKETS WHERE USER_ID=? AND ID=?";
-			Object[] params={userId,id};
+			String sql = "SELECT STATUS FROM TICKET_TICKETS WHERE ID=? AND USER_ID=?";
+			Object[] params={id,userId.getId()};
 			return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
 				Ticket ticket=new Ticket();
 				ticket.setStatus(rs.getString("STATUS"));
@@ -66,8 +66,8 @@ public class TicketDao {
 		
 		public void close(Ticket ticket){
 			
-			String sql = "UPDATE TICKET_TICKETS SET STATUS=? WHERE USER_ID=? AND ID=?";
-			Object[] params={ ticket.getStatus(),ticket.getUserId(),ticket.getId()};
+			String sql = "UPDATE TICKET_TICKETS SET STATUS=? WHERE ID=? AND USER_ID=?";
+			Object[] params={ ticket.getStatus(),ticket.getId(),ticket.getUserId().getId()};
 			jdbcTemplate.update(sql, params);
 
 		}

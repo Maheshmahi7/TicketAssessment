@@ -26,7 +26,7 @@ public class TicketCreationDao {
 	
 	public void updateTicket(int id,User userId,String description)
 	{
-		if(ticketDao.findStatus(id,userId).getStatus()!="CLOSED")
+		if((ticketDao.findStatus(id,userId)).getStatus()!="CLOSED")
 		{
 		ticket.setDescription(description);
 		ticket.setId(id);
