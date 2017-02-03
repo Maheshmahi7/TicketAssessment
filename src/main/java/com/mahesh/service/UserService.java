@@ -29,7 +29,7 @@ public class UserService {
 	TicketCreationDao ticketCreationDao=new TicketCreationDao();
 	
 	
-	public void newTicket(String emailId,String password,String subject,String description,String departmentName,String priorityName) throws ServiceException,PersistenceException
+	public void newTicket(String emailId,String password,String subject,String description,String departmentName,String priorityName) throws ServiceException, PersistenceException
 	{
 		try {
 		user.setEmailId(emailId);
