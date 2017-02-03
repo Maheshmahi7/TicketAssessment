@@ -55,5 +55,16 @@ public class UserDao {
 
 			});
 }
+		public String checkPassword(User user)
+		{	
+			String sql="SELECT PASSWORD FROM TICKET_USERS WHERE EMAIL_ID=?";
+			Object[] params={user.getEmailId()};
+			return jdbcTemplate.queryForObject(sql,params, (rs, rowNum) -> {
+				User users=new User();
+				users.setPassword(rs.getString("PASSWORD"));;
+				return users.getPassword();
+			});
+			
+		}
 
 }
