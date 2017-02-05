@@ -78,7 +78,7 @@ public class EmployeeService {
 					ticketDao.employeeUpdate(ticket);
 				}
 			}catch (ValidatorException e) {
-				throw new ServiceException("Cannot Reassign Ticket", e);
+				throw new ServiceException("Cannot Update Ticket", e);
 			}
 			
 		
@@ -101,7 +101,7 @@ public class EmployeeService {
 				ticketAssignmentDao.solutionUpdate(solution, ticket);
 				}
 			}catch (ValidatorException e) {
-				throw new ServiceException("Cannot Reassign Ticket", e);
+				throw new ServiceException("Cannot Update Solution", e);
 			}
 	}
 	
@@ -118,7 +118,7 @@ public class EmployeeService {
 			ticketAssignmentDao.viewEmployeeTicket(employee);
 			}
 			} catch (ValidatorException e) {
-				throw new ServiceException("Cannot Update Ticket", e);
+				throw new ServiceException("Cannot Show Ticket", e);
 			}
 	}
 	
@@ -136,7 +136,7 @@ public class EmployeeService {
 			}
 			}
 			} catch (ValidatorException e) {
-				throw new ServiceException("Cannot Update Ticket", e);
+				throw new ServiceException("Cannot Delete Ticket", e);
 			}
 	}
 
