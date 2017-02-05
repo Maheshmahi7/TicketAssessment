@@ -88,6 +88,36 @@ public class TicketDao {
 		});
 
 	}
+	
+	public Ticket findDepartmentId(int id)
+	{
+		String sql = "SELECT DEPARTMENT_ID FROM TICKET_TICKETS WHERE ID=?";
+		Object[] params={id};
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+			Ticket ticket=new Ticket();
+			Department department=new Department();
+			department.setId(rs.getInt("DEPARTMENT_ID"));
+			ticket.setDepartmentId(department);
+			return ticket;
+		});
+
+	}
+	
+	public Ticket findEmployeeId(int id)
+	{
+		String sql = "SELECT Employee_ID FROM TICKET_TICKETS WHERE ID=?";
+		Object[] params={id};
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+			Ticket ticket=new Ticket();
+			Employee employee=new Employee();
+			employee.setId(rs.getInt("EMPLOYEE_ID"));
+			ticket.setEmployeeId(employee);
+			return ticket;
+		});
+
+	}
+
+
 
 		
 		public List<Ticket> selectAll() {

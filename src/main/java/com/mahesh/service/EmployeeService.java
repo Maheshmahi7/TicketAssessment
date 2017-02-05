@@ -44,14 +44,16 @@ public class EmployeeService {
 				int id=employeeDao.findEmployeeId(emailId).getId();
 				if(id!=employeeId)	
 				{
-					int existingEmployee=employeeDao.findEmployeeDepartmentId(id).getDepartmentId().getId();
-					int newEmployee=employeeDao.findEmployeeDepartmentId(employeeId).getDepartmentId().getId();
+					int existingEmployee=(employeeDao.findEmployeeDepartmentId(id).getDepartmentId().getId());
+					int newEmployee=(employeeDao.findEmployeeDepartmentId(employeeId).getDepartmentId().getId());
 					if(existingEmployee==newEmployee)
 					{
+						if(newEmployee==(ticketDao.findDepartmentId(ticketId).getDepartmentId().getId())){
 					ticket.setId(ticketId);
 					employee.setId(employeeId);
 					ticket.setEmployeeId(employee);
 					ticketAssignmentDao.reassignTicket(ticket);
+					}
 					}
 				}
 			}
@@ -70,12 +72,13 @@ public class EmployeeService {
 			if(loginDao.EmployeeLogin(employee))
 			{
 				int employeeId=employeeDao.findEmployeeId(emailId).getId();
-				
+				if(employeeId==(ticketDao.findEmployeeId(ticketId).getEmployeeId().getId())){
 					ticket.setId(ticketId);
 					employee.setId(employeeId);
 					ticket.setEmployeeId(employee);
 					ticket.setStatus(status);
 					ticketDao.employeeUpdate(ticket);
+				}
 				}
 			}catch (ValidatorException e) {
 				throw new ServiceException("Cannot Update Ticket", e);
@@ -91,10 +94,13 @@ public class EmployeeService {
 			employeeServiceValidator.updateSolution(emailId, password, ticketId, solutionText);
 			if(loginDao.EmployeeLogin(employee))
 			{
+				int employeeId=employeeDao.findEmployeeId(emailId).getId();
+				if(employeeId==(ticketDao.findEmployeeId(ticketId).getEmployeeId().getId())){
 				ticket.setId(ticketId);
 				solution.setTicketId(ticket);
 				solution.setSolution(solutionText);
 				ticketAssignmentDao.solutionUpdate(solution);
+				}
 				}
 			}catch (ValidatorException e) {
 				throw new ServiceException("Cannot Update Solution", e);
@@ -128,7 +134,10 @@ public class EmployeeService {
 			{
 			int employeeId=employeeDao.findEmployeeId(emailId).getId();
 			if((employeeDao.findEmployeeRoleId(employeeId).getRoleId().getId())==2){
+				int existingEmployee=(employeeDao.findEmployeeDepartmentId(employeeId).getDepartmentId().getId());
+				if(existingEmployee==(ticketDao.findDepartmentId(ticketId).getDepartmentId().getId())){
 				ticketDao.delete(ticketId);
+				}
 			}
 			}
 			} catch (ValidatorException e) {

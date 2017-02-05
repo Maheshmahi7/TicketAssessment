@@ -1,9 +1,9 @@
 package com.mahesh.dao;
 
-import java.util.Iterator;
-import java.util.List;
-
-import com.mahesh.model.Employee;
+//import java.util.Iterator;
+//import java.util.List;
+//
+//import com.mahesh.model.Employee;
 
 public class TestEmployeeDao {
 
@@ -31,13 +31,16 @@ public class TestEmployeeDao {
 		*/
 		//employeeDao.delete(5);
 		
-		List<Employee> list = employeeDao.list();
+		/*List<Employee> list = employeeDao.list();
 		Iterator<Employee> i = list.iterator();
 		while (i.hasNext()) {
 			Employee employees=(Employee) i.next();
 			System.out.println(employees.getId()+"\t"+employees.getName()+"\t"+employees.getDepartmentId().getId()+"\t"+employees.getRoleId().getId()+"\t"+employees.getEmailId()+"\t"+employees.getPassword()
 			+"\t"+employees.getMobileNumber()+"\t"+employees.getActive());
-		}
+		}*/
+		
+		int id=2;
+		System.out.println(employeeDao.findEmployeeDepartmentId(id).getDepartmentId().getId());
 
 	}
 

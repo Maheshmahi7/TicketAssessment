@@ -98,11 +98,11 @@ public class EmployeeDao {
 			String sql = "SELECT DEPARTMENT_ID FROM TICKET_EMPLOYEES WHERE ID = ?";
 			Object[] params = { id };
 			return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
-				Employee employee=new Employee();
+				Employee employees=new Employee();
 				Department department=new Department();
-				department.setId(rs.getInt("DEPARTMNET_ID"));
-				employee.setDepartmentId(department);
-				return employee;
+				department.setId(rs.getInt("DEPARTMENT_ID"));
+				employees.setDepartmentId(department);
+				return employees;
 			
 			});
 

@@ -1,8 +1,6 @@
 package com.mahesh.dao;
 
-import java.util.List;
-
-import com.mahesh.model.Solution;
+import com.mahesh.model.Ticket;
 
 public class TestSolution {
 
@@ -10,11 +8,15 @@ public class TestSolution {
 
 		SolutionDao solutionDao=new SolutionDao();
 		
-		List<Solution> list1=solutionDao.list();  
+		/*List<Solution> list1=solutionDao.list();  
         
 	    for(Solution solution:list1)  
 	        System.out.println(solution.getId()+"\t"+solution.getTicketId().getId()+"\t"+solution.getSolution());  
-	}  
+	}  */
+		Ticket ticket=new Ticket();
+		ticket.setId(8);
+		solutionDao.save(ticket);
 
 	}
+}
 

@@ -1,12 +1,10 @@
 package com.mahesh.service;
 
-import java.util.Iterator;
-import java.util.List;
 
 import com.mahesh.exception.PersistenceException;
 import com.mahesh.exception.ServiceException;
 //import com.mahesh.exception.ValidatorException;
-import com.mahesh.model.Ticket;
+
 
 public class TestUserService {
 
@@ -23,10 +21,10 @@ public class TestUserService {
 			} catch (ValidatorException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 
 			try {
-				userService.newTicket("www.amss.com@gmail.com", "arunkumar", "Reg Refund Issues", "Didnot received the refund yet for my product", "FINANCE TEAM", "HIGH");
+				userService.newTicket("www.amss.com@gmail.com", "arunkumar", "Reg Refund Issues", "Did not received the refund yet for my product", "HR TEAM", "LOW");
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -35,7 +33,7 @@ public class TestUserService {
 				e.printStackTrace();
 			}
 		
-			try {
+	/*		try {
 				userService.ticketUpdate("www.amss.com@gmail.com", "arunkumar", "Did not received the refund yet for my product", 8);
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
@@ -48,7 +46,7 @@ public class TestUserService {
 
 			
 			
-			try {
+			/*try {
 				userService.ticketClose("www.amss.com@gmail.com", "arunkumar", 8);
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
@@ -56,7 +54,7 @@ public class TestUserService {
 			} catch (PersistenceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			}
 			
 	}
