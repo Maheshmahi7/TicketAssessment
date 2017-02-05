@@ -22,11 +22,11 @@ public class UserServiceValidator {
 		validator.isInvalid(department, "DEPARTMENT");
 		validator.isInvalid(priority, "PRIORITY");
 	}
-	public void updateTicket(String emailId,String password,int issueId,String updateDescription) throws ValidatorException{
+	public void updateTicket(String emailId,String password,int ticketId,String updateDescription) throws ValidatorException{
 		
 		validator.isInvalid(emailId, "EMAIL");
 		validator.isInvalid(password, "PASSWORD");
-		validator.isInvalid(issueId, "ISSUE_ID");
+		validator.isInvalid(ticketId, "ISSUE_ID");
 		validator.isInvalid(updateDescription, "DESCRIPTION");
 	}
 	
