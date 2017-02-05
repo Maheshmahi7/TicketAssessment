@@ -25,10 +25,9 @@ public class TicketAssignmentDao {
 		 return ticketDao.selectByEmployeeId(employee);
 	}
 	
-	public void solutionUpdate(Solution solution,Ticket ticket){
+	public void solutionUpdate(Solution solution){
 		
 		solutionDao.update(solution);
-		ticketDao.updateSolution(ticket);
 	}
 
 }

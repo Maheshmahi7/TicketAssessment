@@ -7,26 +7,26 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-
 import com.mahesh.model.Solution;
+import com.mahesh.model.Ticket;
 import com.mahesh.util.ConnectionUtil;
 
 public class SolutionDao {
 
 	JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
 	
-	public void save(String subject) {
+	public void save(Ticket ticket) {
 
-		String sql = "INSERT INTO TICKET_SOLUTIONS(SUBJECT) VALUES(?)";
-		Object[] params = { subject };
+		String sql = "INSERT INTO TICKET_SOLUTIONS(TICKET_ID) VALUES(?)";
+		Object[] params = { ticket.getId() };
 		jdbcTemplate.update(sql, params);
 
 	}
 	
 	public void update(Solution solution) {
 
-		String sql = "UPDATE TICKET_SOLUTIONS SET SOLUTION=? WHERE ID=?";
-		Object[] params = { solution.getSolution(),solution.getId() };
+		String sql = "UPDATE TICKET_SOLUTIONS SET SOLUTION=? WHERE TICKET_ID=?";
+		Object[] params = { solution.getSolution(),solution.getTicketId().getId() };
 		jdbcTemplate.update(sql, params);
 
 	}
@@ -41,7 +41,7 @@ public class SolutionDao {
 		
 		public List<Solution> list() {
 
-			String sql = "SELECT ID,SUBJECT,SOLUTION FROM TICKET_SOLUTIONS";
+			String sql = "SELECT ID,TICKET_ID,SOLUTION FROM TICKET_SOLUTIONS";
 			Object[] params={};
 			return convert(sql,params);
 			}
@@ -61,11 +61,13 @@ public class SolutionDao {
 			 return jdbcTemplate.query(sql,params,new RowMapper<Solution>(){  
 			    @Override  
 			    public Solution mapRow(ResultSet rs, int rownumber) throws SQLException {  
-			        Solution s=new Solution();  
-			        s.setId(rs.getInt("ID"));  
-			        s.setSubject(rs.getString("SUBJECT"));  
-			        s.setSolution(rs.getString("SOLUTION"));  
-			        return s;  
+			        Solution solution=new Solution();  
+			        solution.setId(rs.getInt("ID"));
+			        Ticket ticket=new Ticket();
+			        ticket.setId(rs.getInt("TICKET_ID"));
+			        solution.setTicketId(ticket);  
+			        solution.setSolution(rs.getString("SOLUTION"));  
+			        return solution;  
 			    }  
 			    });  
 			}  

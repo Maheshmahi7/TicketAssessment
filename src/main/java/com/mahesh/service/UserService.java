@@ -3,6 +3,7 @@ package com.mahesh.service;
 import com.mahesh.dao.DepartmentDao;
 import com.mahesh.dao.LoginDao;
 import com.mahesh.dao.PriorityDao;
+import com.mahesh.dao.SolutionDao;
 import com.mahesh.dao.TicketCreationDao;
 import com.mahesh.dao.TicketDao;
 import com.mahesh.dao.UserDao;
@@ -12,6 +13,7 @@ import com.mahesh.exception.ValidatorException;
 import com.mahesh.model.Department;
 import com.mahesh.model.Employee;
 import com.mahesh.model.Priority;
+import com.mahesh.model.Solution;
 import com.mahesh.model.Ticket;
 import com.mahesh.model.User;
 import com.mahesh.validator.UserServiceValidator;
@@ -24,7 +26,9 @@ public class UserService {
 	Department department=new Department();
 	Employee employee=new Employee();
 	Priority priority=new Priority();
+	Solution solution=new Solution();
 	UserDao userDao=new UserDao();
+	SolutionDao solutionDao=new SolutionDao();
 	TicketDao ticketDao=new TicketDao();
 	LoginDao loginDao=new LoginDao();
 	DepartmentDao departmentDao=new DepartmentDao();
@@ -33,7 +37,7 @@ public class UserService {
 	TicketCreationDao ticketCreationDao=new TicketCreationDao();
 
 	
-	public void registration(String name,String emailId,String password,Integer mobileNumber) throws ServiceException,PersistenceException, ValidatorException{
+	public void registration(String name,String emailId,String password,int mobileNumber) throws ServiceException,PersistenceException, ValidatorException{
 	
 		user.setName(name);
 		user.setEmailId(emailId);
@@ -57,11 +61,17 @@ public class UserService {
 		department.setId(departmentId);
 		int priorityId=priorityDao.findPriorityId(priorityName).getId();
 		priority.setId(priorityId);
-		switch(department.getId()){
-		case 1: employee.setId(1);	
+		switch(departmentId){
+		case 1: employee.setId(1);
+				break;
 		case 2: employee.setId(2);
+				break;
 		}
 		ticketCreationDao.createTicket(user,department,subject,description,priority,employee);
+		int ticketId=ticketDao.findTicketId(user).getId();
+		ticket.setId(ticketId);
+		solutionDao.save(ticket);
+		
 		}
 		} catch (ValidatorException e) {
 			throw new ServiceException("Cannot Create Ticket", e);

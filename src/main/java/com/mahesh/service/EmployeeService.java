@@ -84,21 +84,17 @@ public class EmployeeService {
 		
 	}
 	
-	public void updateSolution(String emailId,String password,int ticketId,int solutionId,String solutionText) throws ServiceException, PersistenceException{
+	public void updateSolution(String emailId,String password,int ticketId,String solutionText) throws ServiceException, PersistenceException{
 		try {
 			employee.setEmailId(emailId);
 			employee.setPassword(password);
-			employeeServiceValidator.updateSolution(emailId, password, ticketId, solutionId, solutionText);
+			employeeServiceValidator.updateSolution(emailId, password, ticketId, solutionText);
 			if(loginDao.EmployeeLogin(employee))
 			{
-				int employeeId=employeeDao.findEmployeeId(emailId).getId();
 				ticket.setId(ticketId);
-				employee.setId(employeeId);
-				ticket.setEmployeeId(employee);
-				solution.setId(solutionId);
-				ticket.setSolutionId(solution);
+				solution.setTicketId(ticket);
 				solution.setSolution(solutionText);
-				ticketAssignmentDao.solutionUpdate(solution, ticket);
+				ticketAssignmentDao.solutionUpdate(solution);
 				}
 			}catch (ValidatorException e) {
 				throw new ServiceException("Cannot Update Solution", e);

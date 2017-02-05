@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
 import com.mahesh.model.Department;
 import com.mahesh.model.Employee;
 import com.mahesh.model.Priority;
-import com.mahesh.model.Solution;
 import com.mahesh.model.Ticket;
 import com.mahesh.model.User;
 import com.mahesh.util.ConnectionUtil;
@@ -49,11 +48,6 @@ public class TicketDao {
 		jdbcTemplate.update(sql, params);
 	}
 	
-	public void updateSolution(Ticket ticket){
-		String sql="UPDATE TICKET_TICKETS SET SOLUTION_ID=? WHERE ID=? AND EMPLOYEE_ID=?";
-		Object[] params={ticket.getSolutionId(),ticket.getId(),ticket.getEmployeeId().getId()};
-		jdbcTemplate.update(sql,params);
-	}
 
 	
 	public void delete(int id) {
@@ -82,6 +76,19 @@ public class TicketDao {
 		});
 
 	}
+	
+	public Ticket findTicketId(User userId)
+	{
+		String sql = "SELECT ID FROM TICKET_TICKETS WHERE USER_ID=? ORDER BY ID DESC LIMIT 1";
+		Object[] params={userId.getId()};
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+			Ticket ticket=new Ticket();
+			ticket.setId(rs.getInt("ID"));;
+			return ticket;
+		});
+
+	}
+
 		
 		public List<Ticket> selectAll() {
 
@@ -106,9 +113,6 @@ public class TicketDao {
 				employee.setId(rs.getInt("EMPLOYEE_ID"));
 				ticket.setEmployeeId(employee);
 				ticket.setCreatedDate(rs.getDate("CREATED_DATE").toLocalDate());
-				Solution solution=new Solution();
-				solution.setId(rs.getInt("SOLUTION_ID"));
-				ticket.setSolutionId(solution);
 				ticket.setClosedDate(rs.getDate("CLOSED_DATE").toLocalDate());
 				ticket.setStatus(rs.getString("STATUS"));
 				return ticket;
@@ -135,9 +139,6 @@ public class TicketDao {
 				employee.setId(rs.getInt("EMPLOYEE_ID"));
 				ticket.setEmployeeId(employee);
 				ticket.setCreatedDate(rs.getDate("CREATED_DATE").toLocalDate());
-				Solution solution=new Solution();
-				solution.setId(rs.getInt("SOLUTION_ID"));
-				ticket.setSolutionId(solution);
 				ticket.setStatus(rs.getString("STATUS"));
 				return ticket;
 

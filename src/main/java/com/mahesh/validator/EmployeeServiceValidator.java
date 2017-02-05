@@ -26,11 +26,10 @@ public class EmployeeServiceValidator {
 		validator.isInvalid(password, "PASSWORD");
 
 	}
-	public void updateSolution(String emailId,String password,int ticketId,int solutionId,String solutionText) throws ValidatorException{
+	public void updateSolution(String emailId,String password,int ticketId,String solutionText) throws ValidatorException{
 		validator.isInvalid(emailId, "EMAILID");
 		validator.isInvalid(password, "PASSWORD");
 		validator.isInvalid(ticketId, "TICKETID");
-		validator.isInvalid(solutionId, "SOLUTIONID");
 		validator.isInvalid(solutionText, "SOLUTION");
 
 	}

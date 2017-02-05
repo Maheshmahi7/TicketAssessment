@@ -15,7 +15,6 @@ public class Ticket {
 	private Priority priorityId;
 	private Employee employeeId;
 	private LocalDate createdDate;
-	private Solution solutionId;
 	private LocalDate closedDate;
 	private String status;
 
