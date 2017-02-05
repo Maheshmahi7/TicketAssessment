@@ -1,12 +1,16 @@
 package com.mahesh.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.mahesh.model.Department;
 import com.mahesh.model.Employee;
 import com.mahesh.model.Priority;
+import com.mahesh.model.Solution;
 import com.mahesh.model.Ticket;
 import com.mahesh.model.User;
 import com.mahesh.util.ConnectionUtil;
@@ -40,11 +44,16 @@ public class TicketDao {
 	
 	public void ticketReassign(Ticket ticket){
 
-		String sql="UPDATE TICKET_TICKETS SET EMPLOYEE_ID=? WHERE ID=? AND USER_ID=?";
-		Object[] params={ticket.getEmployeeId().getId(),ticket.getId(),ticket.getUserId().getId()};
+		String sql="UPDATE TICKET_TICKETS SET EMPLOYEE_ID=? WHERE ID=?";
+		Object[] params={ticket.getEmployeeId().getId(),ticket.getId()};
 		jdbcTemplate.update(sql, params);
 	}
 	
+	public void updateSolution(Ticket ticket){
+		String sql="UPDATE TICKET_TICKETS SET SOLUTION_ID=? WHERE ID=? AND EMPLOYEE_ID=?";
+		Object[] params={ticket.getSolutionId(),ticket.getId(),ticket.getEmployeeId().getId()};
+		jdbcTemplate.update(sql,params);
+	}
 
 	
 	public void delete(int id) {
@@ -53,17 +62,33 @@ public class TicketDao {
 		jdbcTemplate.update(sql, id);
 		
 	}
+	
+	public void close(Ticket ticket){
+		
+		String sql = "UPDATE TICKET_TICKETS SET STATUS=?,CLOSED_DATE=CURRENT_TIMESTAMP() WHERE ID=? AND USER_ID=?";
+		Object[] params={ ticket.getStatus(),ticket.getId(),ticket.getUserId().getId()};
+		jdbcTemplate.update(sql, params);
+
+	}
+	
+	public Ticket findStatus(int id,User userId)
+	{
+		String sql = "SELECT STATUS FROM TICKET_TICKETS WHERE ID=? AND USER_ID=?";
+		Object[] params={id,userId.getId()};
+		return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
+			Ticket ticket=new Ticket();
+			ticket.setStatus(rs.getString("STATUS"));
+			return ticket;
+		});
+
+	}
 		
 		public List<Ticket> selectAll() {
 
-			String sql = "SELECT ID,USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID,CREATED_DATE,CLOSED_DATE,STATUS FROM TICKET_TICKETS";
+			String sql = "SELECT ID,USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID,CREATED_DATE,SOLUTION_ID,CLOSED_DATE,STATUS FROM TICKET_TICKETS";
 			Object[] params={};
-			return convert(sql, params);
-
-	}
-
-		private List<Ticket> convert(String sql, Object[] params) {
-			return jdbcTemplate.query(sql,params, (rs, rowNum) -> {
+			return jdbcTemplate.query(sql,params,new RowMapper<Ticket>(){    
+			    public Ticket mapRow(ResultSet rs, int rownumber) throws SQLException {
 				Ticket ticket=new Ticket();
 				ticket.setId(rs.getInt("ID"));
 				User user=new User();
@@ -81,28 +106,17 @@ public class TicketDao {
 				employee.setId(rs.getInt("EMPLOYEE_ID"));
 				ticket.setEmployeeId(employee);
 				ticket.setCreatedDate(rs.getDate("CREATED_DATE").toLocalDate());
+				Solution solution=new Solution();
+				solution.setId(rs.getInt("SOLUTION_ID"));
+				ticket.setSolutionId(solution);
 				ticket.setClosedDate(rs.getDate("CLOSED_DATE").toLocalDate());
 				ticket.setStatus(rs.getString("STATUS"));
 				return ticket;
 
-			});
-		}
-		
-		public Ticket findStatus(int id,User userId)
-		{
-			String sql = "SELECT STATUS FROM TICKET_TICKETS WHERE ID=? AND USER_ID=?";
-			Object[] params={id,userId.getId()};
-			return jdbcTemplate.queryForObject(sql, params, (rs, rowNum) -> {
-				Ticket ticket=new Ticket();
-				ticket.setStatus(rs.getString("STATUS"));
-				return ticket;
-			});
+			    }});
+	}
 
-		}
-		public List<Ticket> selectByUserId(User user) {
-
-			String sql = "SELECT ID,USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID,CREATED_DATE,STATUS FROM TICKET_TICKETS WHERE USER_ID=?";
-			Object[] params={user.getId()};
+		private List<Ticket> convert(String sql, Object[] params) {
 			return (List<Ticket>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
 				Ticket ticket=new Ticket();
 				ticket.setId(rs.getInt("ID"));
@@ -121,19 +135,31 @@ public class TicketDao {
 				employee.setId(rs.getInt("EMPLOYEE_ID"));
 				ticket.setEmployeeId(employee);
 				ticket.setCreatedDate(rs.getDate("CREATED_DATE").toLocalDate());
+				Solution solution=new Solution();
+				solution.setId(rs.getInt("SOLUTION_ID"));
+				ticket.setSolutionId(solution);
 				ticket.setStatus(rs.getString("STATUS"));
 				return ticket;
 
 			});
+		}
+		
+	
+		public List<Ticket> selectByUserId(User user) {
+
+			String sql = "SELECT ID,USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID,CREATED_DATE,STATUS FROM TICKET_TICKETS WHERE USER_ID=?";
+			Object[] params={user.getId()};
+			return convert(sql,params);
 	}
 		
-		public void close(Ticket ticket){
-			
-			String sql = "UPDATE TICKET_TICKETS SET STATUS=? WHERE ID=? AND USER_ID=?";
-			Object[] params={ ticket.getStatus(),ticket.getId(),ticket.getUserId().getId()};
-			jdbcTemplate.update(sql, params);
 
-		}
+		public List<Ticket> selectByEmployeeId(Employee employee) {
 
+			String sql = "SELECT ID,USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID,CREATED_DATE,STATUS FROM TICKET_TICKETS WHERE EMPLOYEE_ID=?";
+			Object[] params={employee.getId()};
+			return convert(sql,params);
+	}
+		
+		
 
 }

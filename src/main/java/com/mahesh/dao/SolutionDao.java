@@ -1,8 +1,12 @@
 package com.mahesh.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+
 
 import com.mahesh.model.Solution;
 import com.mahesh.util.ConnectionUtil;
@@ -42,7 +46,7 @@ public class SolutionDao {
 			return convert(sql,params);
 			}
 
-		private List<Solution> convert(String sql, Object[] params) {
+	/*	private List<Solution> convert1(String sql, Object[] params) {
 			return (List<Solution>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
 				Solution solution=new Solution();
 				solution.setId(rs.getInt("ID"));
@@ -51,6 +55,20 @@ public class SolutionDao {
 				return solution;
 
 			});
-	}
+	}*/
+		
+		private List<Solution> convert(String sql,Object[] params){  
+			 return jdbcTemplate.query(sql,params,new RowMapper<Solution>(){  
+			    @Override  
+			    public Solution mapRow(ResultSet rs, int rownumber) throws SQLException {  
+			        Solution s=new Solution();  
+			        s.setId(rs.getInt("ID"));  
+			        s.setSubject(rs.getString("SUBJECT"));  
+			        s.setSolution(rs.getString("SOLUTION"));  
+			        return s;  
+			    }  
+			    });  
+			}  
+
 
 }

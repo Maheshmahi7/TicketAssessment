@@ -1,8 +1,11 @@
 package com.mahesh.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.mahesh.model.Department;
 import com.mahesh.model.Employee;
@@ -46,7 +49,8 @@ public class EmployeeDao {
 	}
 		
 		private List<Employee> convert(String sql, Object[] params) {
-		return (List<Employee>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
+		return jdbcTemplate.query(sql,params,new RowMapper<Employee>(){  
+		    public Employee mapRow(ResultSet rs, int rownumber) throws SQLException {
 			Employee employee=new Employee();
 			employee.setId(rs.getInt("ID"));
 			employee.setName(rs.getString("NAME"));
@@ -62,7 +66,7 @@ public class EmployeeDao {
 			employee.setActive(rs.getInt("ACTIVE"));
 			return employee;
 
-		});
+		}});
 
 
 }
@@ -76,6 +80,46 @@ public class EmployeeDao {
 				return employees.getPassword();
 			});
 			
+		}
+		
+		public Employee findEmployeeId(String emailId) {
+			String sql = "SELECT ID FROM TICKET_EMPLOYEES WHERE EMAIL_ID = ?";
+			Object[] params = { emailId };
+			return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
+				Employee employee=new Employee();
+				employee.setId(rs.getInt("ID"));
+				return employee;
+			
+			});
+
+		}
+		
+		public Employee findEmployeeDepartmentId(int id) {
+			String sql = "SELECT DEPARTMENT_ID FROM TICKET_EMPLOYEES WHERE ID = ?";
+			Object[] params = { id };
+			return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
+				Employee employee=new Employee();
+				Department department=new Department();
+				department.setId(rs.getInt("DEPARTMNET_ID"));
+				employee.setDepartmentId(department);
+				return employee;
+			
+			});
+
+		}
+		
+		public Employee findEmployeeRoleId(int id) {
+			String sql = "SELECT ROLE_ID FROM TICKET_EMPLOYEES WHERE ID = ?";
+			Object[] params = { id };
+			return jdbcTemplate.queryForObject(sql, params, (rs, rowNo) -> {
+				Employee employee=new Employee();
+				Role role=new Role();
+				role.setId(rs.getInt("ROLE_ID"));
+				employee.setRoleId(role);
+				return employee;
+			
+			});
+
 		}
 
 
