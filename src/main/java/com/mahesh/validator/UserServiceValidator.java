@@ -5,6 +5,14 @@ import com.mahesh.util.Validator;
 
 public class UserServiceValidator {
 	Validator validator=new Validator();
+	
+	public void registration(String name,String emailId,String password,Integer mobileNumber) throws ValidatorException{
+		
+		validator.isInvalid(name, "NAME");
+		validator.isInvalid(emailId, "EMAILID");
+		validator.isInvalid(password, "PASSWORD");
+		validator.isInvalid(mobileNumber, "MOBILENUMBER");
+	}
 	public void createTicket(String emailId,String password,String subject,String description,String department,String priority) throws ValidatorException{
 	
 		validator.isInvalid(emailId, "EMAIL");

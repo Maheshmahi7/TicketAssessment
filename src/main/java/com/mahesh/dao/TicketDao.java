@@ -16,8 +16,8 @@ public class TicketDao {
 	JdbcTemplate jdbcTemplate=ConnectionUtil.getJdbcTemplate();
 	
 	public void save(Ticket ticket) {
-		String sql = "INSERT INTO TICKET_TICKETS(USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID) VALUES(?,?,?,?,?)";
-		Object[] params={ticket.getUserId().getId(),ticket.getDepartmentId().getId(),ticket.getSubject(),ticket.getDescription(),ticket.getPriorityId().getId()};
+		String sql = "INSERT INTO TICKET_TICKETS(USER_ID,DEPARTMENT_ID,SUBJECT,DESCRIPTION,PRIORITY_ID,EMPLOYEE_ID) VALUES(?,?,?,?,?,?)";
+		Object[] params={ticket.getUserId().getId(),ticket.getDepartmentId().getId(),ticket.getSubject(),ticket.getDescription(),ticket.getPriorityId().getId(),ticket.getEmployeeId().getId()};
 		jdbcTemplate.update(sql, params);
 
 	}
@@ -29,6 +29,22 @@ public class TicketDao {
 		jdbcTemplate.update(sql, params);
 
 	}
+	
+	public void employeeUpdate(Ticket ticket){
+		
+		String sql="UPDATE TICKET_TICKETS SET STATUS=? WHERE ID=? AND EMPLOYEE_ID=?";
+		Object[] params={ticket.getStatus(),ticket.getId(),ticket.getEmployeeId().getId()};
+		jdbcTemplate.update(sql,params);
+		
+	}
+	
+	public void ticketReassign(Ticket ticket){
+
+		String sql="UPDATE TICKET_TICKETS SET EMPLOYEE_ID=? WHERE ID=? AND USER_ID=?";
+		Object[] params={ticket.getEmployeeId().getId(),ticket.getId(),ticket.getUserId().getId()};
+		jdbcTemplate.update(sql, params);
+	}
+	
 
 	
 	public void delete(int id) {
@@ -47,7 +63,7 @@ public class TicketDao {
 	}
 
 		private List<Ticket> convert(String sql, Object[] params) {
-			return (List<Ticket>) jdbcTemplate.query(sql,params, (rs, rowNum) -> {
+			return jdbcTemplate.query(sql,params, (rs, rowNum) -> {
 				Ticket ticket=new Ticket();
 				ticket.setId(rs.getInt("ID"));
 				User user=new User();
