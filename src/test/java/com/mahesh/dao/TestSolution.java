@@ -13,7 +13,7 @@ public class TestSolution {
 		List<Solution> list1=solutionDao.list();  
         
 	    for(Solution solution:list1)  
-	        System.out.println(solution.getId()+"\t"+solution.getSubject()+"\t"+solution.getSolution());  
+	        System.out.println(solution.getId()+"\t"+solution.getTicketId().getId()+"\t"+solution.getSolution());  
 	}  
 
 	}

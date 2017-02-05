@@ -39,7 +39,7 @@ public class TestTicketDao {
 				while (i.hasNext()) {
 					Ticket tickets=(Ticket) i.next();
 					System.out.println(tickets.getId()+"\t"+tickets.getUserId().getId()+"\t"+tickets.getDepartmentId().getId()+"\t"+tickets.getSubject()+"\t\t"+tickets.getDescription()
-					+"\t"+tickets.getPriorityId().getId()+"\t"+tickets.getEmployeeId().getId()+"\t"+tickets.getCreatedDate()+"\t"+tickets.getSolutionId().getId()+"\t"+tickets.getStatus());
+					+"\t"+tickets.getPriorityId().getId()+"\t"+tickets.getEmployeeId().getId()+"\t"+tickets.getCreatedDate()+"\t"+tickets.getStatus());
 				}
 				
 				
