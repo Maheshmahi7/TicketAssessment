@@ -13,6 +13,7 @@ import com.mahesh.exception.ValidatorException;
 import com.mahesh.model.Department;
 import com.mahesh.model.Employee;
 import com.mahesh.model.Priority;
+import com.mahesh.model.Role;
 import com.mahesh.model.Solution;
 import com.mahesh.model.Ticket;
 import com.mahesh.validator.EmployeeServiceValidator;
@@ -24,6 +25,7 @@ public class EmployeeService {
 	Employee employee=new Employee();
 	Priority priority=new Priority();
 	Solution solution=new Solution();
+	Role role=new Role();
 	EmployeeDao employeeDao=new EmployeeDao();
 	TicketDao ticketDao=new TicketDao();
 	LoginDao loginDao=new LoginDao();
@@ -32,6 +34,19 @@ public class EmployeeService {
 	EmployeeServiceValidator employeeServiceValidator=new EmployeeServiceValidator();
 	TicketAssignmentDao ticketAssignmentDao=new TicketAssignmentDao();
 	TicketCreationDao ticketCreationDao=new TicketCreationDao();
+	
+	public void registration(String name,String emailId,String password,int mobileNumber,int departmentId,int roleId) throws ServiceException,PersistenceException, ValidatorException{
+		
+		employee.setName(name);
+		employee.setEmailId(emailId);
+		employee.setPassword(password);
+		employee.setMobileNumber(mobileNumber);
+		department.setId(departmentId);
+		employee.setDepartmentId(department);
+		role.setId(roleId);
+		employee.setRoleId(role);
+		employeeDao.save(employee);
+	}
 	
 	public void ticketReassignmnet(String emailId,String password,int ticketId,int employeeId) throws ServiceException, PersistenceException{
 		

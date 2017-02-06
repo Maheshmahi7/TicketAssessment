@@ -18,7 +18,7 @@ public class EmployeeDao {
 	
 	public void save(Employee employee) {
 
-		String sql = "INSERT INTO TICKET_EMPLOYEES(NAME,DEPARTMENT_ID,ROLE_ID,EMAIL_ID,PASSWORD,MOBILE_NUMBER) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO TICKET_EMPLOYEES(NAME,DEPARTMENT_ID,ROLE_ID,EMAIL_ID,PASSWORD,MOBILE_NUMBER) VALUES(?,?,?,?,?,?)";
 		Object[] params = { employee.getName(),employee.getDepartmentId().getId(),employee.getRoleId().getId(),employee.getEmailId(),employee.getPassword(),employee.getMobileNumber() };
 		jdbcTemplate.update(sql, params);
 
