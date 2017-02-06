@@ -1,6 +1,7 @@
 package com.mahesh.dao;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.mahesh.model.Department;
 import com.mahesh.model.Employee;
@@ -38,10 +39,13 @@ public class TicketCreationDao {
 		
 	}
 	
-	public List<Ticket> viewTicket(User user)
-	{
-
-		 return ticketDao.selectByUserId(user);
+	public void ViewTicket(User user){
+	Logger logger = Logger.getLogger(TicketCreationDao.class.getName());
+	List<Ticket> list = ticketDao.selectByUserId(user);
+	for (Ticket ticket : list) {
+		logger.info(ticket.getId() + "\t" + ticket.getUserId().getId()  + "\t" + ticket.getDepartmentId().getId()  + "\t" + ticket.getSubject() + "\t" + ticket.getDescription()  + "\t" + ticket.getPriorityId().getId() 
+				 + "\t" + ticket.getEmployeeId().getId() + "\t"+ ticket.getCreatedDate() + "\t" + ticket.getStatus());
+	}
 	}
 	
 	public void closeTicket(int id,User user)
@@ -54,6 +58,8 @@ public class TicketCreationDao {
 		
 			
 	}
+	
+
 	
 
 }

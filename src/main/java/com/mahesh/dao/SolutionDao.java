@@ -34,7 +34,7 @@ public class SolutionDao {
 
 	public void delete(int id) {
 
-		String sql = "DELETE FROM TICKET_SOLUTIONS WHERE ID=?";
+		String sql = "DELETE FROM TICKET_SOLUTIONS WHERE TICKET_ID=?";
 		jdbcTemplate.update(sql, id);
 		
 	}

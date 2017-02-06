@@ -23,7 +23,7 @@ public class TestUserService {
 				e.printStackTrace();
 			}*/
 
-			try {
+		/*	try {
 				userService.newTicket("www.amss.com@gmail.com", "arunkumar", "Reg Refund Issues", "Did not received the refund yet for my product", "HR TEAM", "LOW");
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
@@ -32,7 +32,7 @@ public class TestUserService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+		*/
 	/*		try {
 				userService.ticketUpdate("www.amss.com@gmail.com", "arunkumar", "Did not received the refund yet for my product", 8);
 			} catch (ServiceException e) {
@@ -55,7 +55,20 @@ public class TestUserService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
+			
+			try {
+				userService.viewTicket("www.amss.com@gmail.com", "arunkumar");
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (PersistenceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
+	
+	
+	}
 			
 	}
 

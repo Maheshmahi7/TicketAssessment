@@ -4,6 +4,7 @@ import com.mahesh.dao.DepartmentDao;
 import com.mahesh.dao.EmployeeDao;
 import com.mahesh.dao.LoginDao;
 import com.mahesh.dao.PriorityDao;
+import com.mahesh.dao.SolutionDao;
 import com.mahesh.dao.TicketAssignmentDao;
 import com.mahesh.dao.TicketCreationDao;
 import com.mahesh.dao.TicketDao;
@@ -29,6 +30,7 @@ public class EmployeeService {
 	EmployeeDao employeeDao=new EmployeeDao();
 	TicketDao ticketDao=new TicketDao();
 	LoginDao loginDao=new LoginDao();
+	SolutionDao solutionDao=new SolutionDao();
 	DepartmentDao departmentDao=new DepartmentDao();
 	PriorityDao priorityDao=new PriorityDao();
 	EmployeeServiceValidator employeeServiceValidator=new EmployeeServiceValidator();
@@ -132,7 +134,7 @@ public class EmployeeService {
 			{
 			int employeeId=employeeDao.findEmployeeId(emailId).getId();
 			employee.setId(employeeId);
-			ticketAssignmentDao.viewEmployeeTicket(employee);
+			ticketAssignmentDao.ViewEmployeeTicket(employee);
 			}
 			} catch (ValidatorException e) {
 				throw new ServiceException("Cannot Show Ticket", e);
@@ -151,6 +153,7 @@ public class EmployeeService {
 			if((employeeDao.findEmployeeRoleId(employeeId).getRoleId().getId())==2){
 				int existingEmployee=(employeeDao.findEmployeeDepartmentId(employeeId).getDepartmentId().getId());
 				if(existingEmployee==(ticketDao.findDepartmentId(ticketId).getDepartmentId().getId())){
+				solutionDao.delete(ticketId);
 				ticketDao.delete(ticketId);
 				}
 			}

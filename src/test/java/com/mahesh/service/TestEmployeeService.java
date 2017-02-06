@@ -18,7 +18,7 @@ public class TestEmployeeService {
 			e.printStackTrace();
 		}
 		*/
-		try {
+		/*try {
 			employeeService.updateTicket("arunk@gmail.com", "arunkumar", 9, "INPROGRESS");
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
@@ -26,7 +26,7 @@ public class TestEmployeeService {
 		} catch (PersistenceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		/*
 		try {
 			employeeService.updateSolution("rajeshraj@gmail.com", "rajeshkumar", 8, "Face it");
@@ -47,6 +47,16 @@ public class TestEmployeeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+		
+		try {
+			employeeService.showEmployeeTicket("rajeshraj@gmail.com", "rajeshkumar");
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistenceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

@@ -129,7 +129,7 @@ public class UserService {
 			{
 			int userId=userDao.findUserId(emailId).getId();
 			user.setId(userId);
-			ticketCreationDao.viewTicket(user);
+			ticketCreationDao.ViewTicket(user);
 			}
 			} catch (ValidatorException e) {
 				throw new ServiceException("Cannot Update Ticket", e);
